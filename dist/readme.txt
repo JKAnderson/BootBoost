@@ -2,7 +2,7 @@
 --| BootBoost 1.0
 --| By TKGP
 --| https://www.nexusmods.com/darksouls3/mods/303
---| 
+--| https://github.com/JKAnderson/BootBoost
 
 Decreases initial boot time in DS3 by around 10-15 seconds. Every time the game starts it has to decrypt the .bhd files in the game directory, which takes a surprisingly long time. Fortunately if you decrypt them yourself and replace the files it will just load them directly, which is what this tool does.
 I recommend using with the NoLogo Mod for maximum speed:
