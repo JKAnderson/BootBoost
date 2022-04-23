@@ -6,8 +6,8 @@ Requires [.NET 4.7.2](https://www.microsoft.com/net/download/thank-you/net472) -
 [Nexus Page](https://www.nexusmods.com/darksouls3/mods/303)  
 
 # Installation
-1. Drop BootBoost.exe into the game directory, usually "C:\Program Files (x86)\Steam\steamapps\common\DARK SOULS III\Game"  
-2. Run it.
+1. Run BootBoostGUI.exe and select the directory that has DarkSoulsIII.exe, usually "C:\Program Files (x86)\Steam\steamapps\common\DARK SOULS III\Game"
+2. Press the "Start" button.
 
 # Uninstallation
 1. Restore the original files from the "BootBoost Backup" folder.
