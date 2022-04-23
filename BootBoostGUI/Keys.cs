@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BootBoost
+namespace BootBoostGUI
 {
     static class Headers
     {

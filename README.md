@@ -16,3 +16,5 @@ Requires [.NET 4.7.2](https://www.microsoft.com/net/download/thank-you/net472) -
 [BouncyCastle](https://www.bouncycastle.org/csharp/)
 
 [Costura.Fody](https://github.com/Fody/Costura) by Simon Cropp, Cameron MacFarland
+
+GUI added by NO0bMaster69
