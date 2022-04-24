@@ -4,7 +4,7 @@
 --| https://www.nexusmods.com/darksouls3/mods/303
 --| https://github.com/JKAnderson/BootBoost
 
---| BootBoostGUI 1.1
+--| BootBoostGUI 1.2
 --| By NO0bMaster69
 --| https://github.com/NO0bMaster69/BootBoostGUI
 
@@ -18,13 +18,14 @@ https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.202-windows
 
 --| Installation
 
-1. Drop BootBoost.exe into the game directory, usually "C:\Program Files (x86)\Steam\steamapps\common\DARK SOULS III\Game"  
-2. Run it.
+1. Run BootBoostGUI.exe and select the directory that has DarkSoulsIII.exe, usually "C:\Program Files (x86)\Steam\steamapps\common\DARK SOULS III\Game"
+2. Press the "Start" button.
 
 
 --| Uninstallation
 
-1. Restore the original files from the "BootBoost Backup" folder.
+1. Run BootBoostGUI.exe and select the directory that has DarkSoulsIII.exe, usually "C:\Program Files (x86)\Steam\steamapps\common\DARK SOULS III\Game"
+2. Press the "Restore Backup" button.
 
 
 --| Credits

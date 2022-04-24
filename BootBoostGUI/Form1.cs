@@ -10,6 +10,7 @@ namespace BootBoostGUI
     public partial class Form1 : Form
     {
         string installDir = "";
+        const string bakDir = "BootBoost Backup";
 
         public Form1()
         {
@@ -54,6 +55,11 @@ namespace BootBoostGUI
                     errorLabel.Text = "";
                     startButton.Enabled = true;
                 }
+
+                if (Directory.Exists($"{this.installDir}\\{bakDir}"))
+                    restoreButton.Enabled = true;
+                else
+                    restoreButton.Enabled = false;
             }
         }
 
@@ -64,19 +70,19 @@ namespace BootBoostGUI
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            string bakDir = "BootBoost Backup";
+            browseButton.Enabled = false;
 
             int success = 0;
 
             foreach (string header in Headers.Keys.Keys)
             {
-                if (!File.Exists(this.installDir + '\\' + header))
+                if (!File.Exists($"{this.installDir}\\{header}"))
                 {
                     outputTextBox.AppendText($"Header not found, skipping: {header}" + "\r\n");
                 }
                 else
                 {
-                    byte[] bytes = File.ReadAllBytes(this.installDir + '\\' + header);
+                    byte[] bytes = File.ReadAllBytes($"{this.installDir}\\{header}");
                     if (Encoding.ASCII.GetString(bytes, 0, 4) == "BHD5")
                     {
                         outputTextBox.AppendText($"Header already decrypted, skipping: {header}" + "\r\n");
@@ -84,7 +90,7 @@ namespace BootBoostGUI
                     else
                     {
                         outputTextBox.AppendText($"Decrypting header: {header}" + "\r\n");
-                        byte[] decrypted = null;
+                        byte[] decrypted = Array.Empty<byte>();
                         try
                         {
                             decrypted = Decrypt(bytes, Headers.Keys[header]);
@@ -98,13 +104,13 @@ namespace BootBoostGUI
                         {
                             try
                             {
-                                Directory.CreateDirectory(this.installDir + '\\' + bakDir);
+                                Directory.CreateDirectory($"{this.installDir}\\{bakDir}");
                                 if (!File.Exists($"{this.installDir}\\{bakDir}\\{header}"))
-                                    File.Copy(this.installDir + '\\' + header, $"{this.installDir}\\{bakDir}\\{header}");
+                                    File.Copy($"{this.installDir}\\{header}", $"{this.installDir}\\{bakDir}\\{header}");
 
                                 try
                                 {
-                                    File.WriteAllBytes(this.installDir + '\\' + header, decrypted);
+                                    File.WriteAllBytes($"{this.installDir}\\{header}", decrypted);
                                     outputTextBox.AppendText($"Header decryption succeeded." + "\r\n");
                                     success++;
                                 }
@@ -122,6 +128,8 @@ namespace BootBoostGUI
                 }
             }
 
+            startButton.Enabled = false;
+            restoreButton.Enabled = false;
             outputTextBox.AppendText($"Decrypted {success} headers." + "\r\n");
             outputTextBox.AppendText("\r\n");
             outputTextBox.AppendText("Click the Exit button to exit");
@@ -161,6 +169,82 @@ namespace BootBoostGUI
 
                 return outStream.ToArray();
             }
+        }
+
+        private void restoreButton_Click(object sender, EventArgs e)
+        {
+            browseButton.Enabled = false;
+
+            int success = 0;
+
+            // If the backup directory does not exist, break from
+            // the method.
+            if (!Directory.Exists($"{this.installDir}\\{bakDir}"))
+            {
+                outputTextBox.AppendText($"Directory 'BootBoost Backup' was not found in '{this.installDir}'");
+                browseButton.Enabled = true;
+                return;
+            }
+
+            // Iterate through each header file to see if it
+            // exists within the backup directory; if not,
+            // set breakFlag to true and break from the method.
+            string[] headers = Headers.Keys.Keys.ToArray();
+            bool breakFlag = false;
+            foreach (string header in headers)
+            {
+                if (!File.Exists($"{this.installDir}\\{bakDir}\\{header}"))
+                {
+                    outputTextBox.AppendText($"{(breakFlag ? "" : "Backup incomplete or not present.\r\n")}File '{header}' was not found in '{this.installDir}\\{bakDir}'" + "\r\n");
+                    breakFlag = true;
+                }
+            }
+            if (breakFlag)
+            {
+                browseButton.Enabled = true;
+                return;
+            }
+
+            // Move each header from the backup directory to
+            // the install directory then delete the backup
+            // directory.
+            breakFlag = false;
+            Directory.CreateDirectory($"{this.installDir}\\tmp");
+            foreach (string header in headers)
+            {
+                File.Copy($"{this.installDir}\\{header}", $"{this.installDir}\\tmp\\{header}", true);
+                try
+                {
+                    outputTextBox.AppendText($"Restoring header: {header}" + "\r\n");
+                    File.Copy($"{this.installDir}\\{bakDir}\\{header}", $"{this.installDir}\\{header}", true);
+                    outputTextBox.AppendText($"Succussfully restored {header}" + "\r\n");
+                    success++;
+                }
+                catch (Exception ex)
+                {
+                    outputTextBox.AppendText($"Failed to restore {header}. Reason:\r\n{ex}" + "\r\n");
+                    breakFlag = true;
+                }
+            }
+            if (breakFlag)
+            {
+                foreach (string header in headers)
+                {
+                    File.Copy($"{this.installDir}\\tmp\\{header}", $"{this.installDir}\\{header}", true);
+                }
+                Directory.Delete($"{this.installDir}\\tmp");
+                browseButton.Enabled = true;
+                outputTextBox.AppendText("\r\nSome headers failed to restore. Operation has been aborted and all files have been returned to their initial states." + "\r\n");
+                return;
+            }
+            Directory.Delete($"{this.installDir}\\tmp", true);
+            Directory.Delete($"{this.installDir}\\{bakDir}", true);
+
+            startButton.Enabled = false;
+            restoreButton.Enabled = false;
+            outputTextBox.AppendText($"Restored {success} headers." + "\r\n");
+            outputTextBox.AppendText("\r\n");
+            outputTextBox.AppendText("Click the Exit button to exit");
         }
     }
 }

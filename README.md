@@ -10,7 +10,8 @@ Requires [.NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you
 2. Press the "Start" button.
 
 # Uninstallation
-1. Restore the original files from the "BootBoost Backup" folder.
+1. Run BootBoostGUI.exe and select the directory that has DarkSoulsIII.exe, usually "C:\Program Files (x86)\Steam\steamapps\common\DARK SOULS III\Game"
+2. Press the "Restore Backup" button.
 
 # Credits
 [BouncyCastle](https://www.bouncycastle.org/csharp/)

@@ -35,6 +35,7 @@
             this.outputTextBox = new System.Windows.Forms.TextBox();
             this.startButton = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
+            this.restoreButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // urlTextBox
@@ -46,6 +47,7 @@
             this.urlTextBox.ReadOnly = true;
             this.urlTextBox.Size = new System.Drawing.Size(500, 23);
             this.urlTextBox.TabIndex = 0;
+            this.urlTextBox.TabStop = false;
             // 
             // browseButton
             // 
@@ -81,6 +83,7 @@
             this.outputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.outputTextBox.Size = new System.Drawing.Size(600, 250);
             this.outputTextBox.TabIndex = 0;
+            this.outputTextBox.TabStop = false;
             this.outputTextBox.WordWrap = false;
             // 
             // startButton
@@ -106,11 +109,24 @@
             this.exitButton.UseVisualStyleBackColor = true;
             this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
+            // restoreButton
+            // 
+            this.restoreButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.restoreButton.Enabled = false;
+            this.restoreButton.Location = new System.Drawing.Point(12, 326);
+            this.restoreButton.Name = "restoreButton";
+            this.restoreButton.Size = new System.Drawing.Size(123, 23);
+            this.restoreButton.TabIndex = 2;
+            this.restoreButton.Text = "&Restore Backup";
+            this.restoreButton.UseVisualStyleBackColor = true;
+            this.restoreButton.Click += new System.EventHandler(this.restoreButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 361);
+            this.Controls.Add(this.restoreButton);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.startButton);
             this.Controls.Add(this.outputTextBox);
@@ -135,5 +151,6 @@
         private TextBox outputTextBox;
         private Button startButton;
         private Button exitButton;
+        private Button restoreButton;
     }
 }
